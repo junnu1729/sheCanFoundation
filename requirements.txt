@@ -7,7 +7,6 @@ matplotlib
 mysql-connector-python
 Flask-Cors            
 gunicorn               
-﻿absl-py==2.1.0
 aiohappyeyeballs==2.4.3
 aiohttp==3.11.0
 aiosignal==1.3.1
@@ -132,3 +131,4 @@ whitenoise==6.9.0
 wikipedia==1.4.0
 wrapt==1.16.0
 yarl==1.17.1
+
