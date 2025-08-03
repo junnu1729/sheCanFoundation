@@ -4,3 +4,6 @@ Flask-Session
 Flask-Cors
 gunicorn  
 matplotlib
+mysql-connector-python
+Flask-Cors            
+gunicorn               
