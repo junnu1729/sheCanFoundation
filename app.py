@@ -5,7 +5,7 @@ import os
 app = Flask(__name__)
 app.secret_key = 'Juned@2006'
 UNIVERSAL_PASSCODE = "SHECAN2025"
-
+app.debug = True
 
 # ✅ Correct database connection with user = 'junnu'
 def get_db_connection():
