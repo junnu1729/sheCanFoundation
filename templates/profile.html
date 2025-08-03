@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Juned's Fund Profile</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .chart-container {
+      width: 220px;
+      height: 220px;
+      margin: 0 auto;
+    }
+
+    canvas {
+      display: block;
+      width: 100% !important;
+      height: 100% !important;
+    }
+  </style>
+</head>
+<body class="bg-light p-4">
+  <div class="container">
+    <h2 class="mb-4 text-center">Juned's Fund Dashboard</h2>
+
+    {% if person %}
+    <div class="row justify-content-center">
+      <div class="col-md-5">
+        <div class="card shadow rounded">
+          <div class="card-body text-center">
+            <h5 class="card-title text-primary mb-3">{{ person.name }}</h5>
+            <p class="mb-1">Total Fund: ₹{{ person.total_amount }}</p>
+            <p class="mb-1">Collected: ₹{{ person.collected_amount }}</p>
+            <p class="mb-3">Remaining: ₹{{ person.remaining }}</p>
+
+            <div class="chart-container">
+              <canvas id="fundChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const ctx = document.getElementById('fundChart');
+      new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: ['Collected', 'Remaining'],
+          datasets: [{
+            data: [{{ person.percent_collected }}, {{ person.percent_remaining }}],
+            backgroundColor: ['#28a745', '#dc3545'],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'bottom'
+            },
+            tooltip: {
+              callbacks: {
+                label: function(ctx) {
+                  return ctx.label + ': ' + ctx.raw + '%';
+                }
+              }
+            }
+          }
+        }
+      });
+    </script>
+
+    <!-- 👇 ADDED DONATION TABLE HERE -->
+    <div class="mt-5">
+      <h5 class="text-center text-success mb-3">Donation History</h5>
+      {% if donations %}
+      <div class="table-responsive">
+        <table class="table table-bordered table-striped text-center">
+          <thead class="table-dark">
+            <tr>
+              <th>#</th>
+              <th>Donor</th>
+              <th>Amount (₹)</th>
+              <th>Date</th>
+              <th>Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for donation in donations %}
+            <tr>
+              <td>{{ loop.index }}</td>
+              <td>{{ donation.donor_name }}</td>
+              <td>{{ donation.amount }}</td>
+              <td>{{ donation.date }}</td>
+              <td>{{ donation.time }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+        <p class="text-center text-muted">No donations yet.</p>
+      {% endif %}
+    </div>
+    <!-- 👆 END TABLE -->
+
+    {% else %}
+    <p class="text-center text-danger">No data found for Juned.</p>
+    {% endif %}
+  </div>
+</body>
+</html>

@@ -1,0 +1,136 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <title>{% block title %}Dashboard | SheCan Foundation{% endblock %}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+        /* Header Styling */
+        .header {
+            background-color: #000;
+            color: white;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        .header .user {
+            background-color: white;
+            color: #000;
+            padding: 6px 16px;
+            border-radius: 9999px;
+            font-weight: 600;
+        }
+      .hero-section {
+      background: linear-gradient(135deg, #6a1b9a, #8e24aa);
+      color: white;
+      padding: 100px 0;
+      text-align: center;
+    }
+        h1 {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 2.2rem;
+        }
+
+        .intern-greeting {
+            text-align: center;
+            font-size: 1.5rem;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .cards {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            padding: 0 40px 40px;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            width: 280px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+        }
+
+        .card h2 {
+            margin-top: 0;
+            font-size: 1.25rem;
+        }
+
+        .amount {
+            font-weight: 500;
+            margin: 8px 0;
+        }
+
+        .collected {
+            color: green;
+        }
+
+        .remaining {
+            color: red;
+        }
+        .header{
+            style: none;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Section -->
+    <div class="header">
+        <div class="logo">SheCan Foundation</div>
+         <h2>Welcome, {{ session['email'] }}!</h2>
+       
+        <div class="user"><a href="{{ url_for('home')}}" style="text-decoration: none; color: inherit;">Log Out</a></div>
+        <a href="{{ url_for('profile') }}">
+  <img src="{{ url_for('static', filename='images/default_avatar.png') }}" alt="Profile" 
+       style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; margin-right: 10px;">
+</a>
+
+    </div>
+     <section class="hero-section">
+    <div class="container">
+      <h1 class="display-4 fw-bold">Welcome to SheCan Foundation</h1>
+      <p class="lead mt-3">Empowering young women through real-world internships and skill-building programs.</p>
+    </div>
+  </section>
+
+    <h1>💰 Collection Dashboard</h1>
+    <div class="intern-greeting">Hello Interns 👋</div>
+
+    <div class="cards">
+        {% for person in people %}
+        <div class="card">
+            <h2>{{ person.name }}</h2>
+            <div class="amount">Total Amount: ₹{{ person.total_amount }}</div>
+            <div class="amount collected">Collected: ₹{{ person.collected_amount }}</div>
+            <div class="amount remaining">Remaining: ₹{{ person.total_amount - person.collected_amount }}</div>
+        </div>
+        {% endfor %}
+    </div>
+
+</body>
+</html>
